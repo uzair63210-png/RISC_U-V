@@ -1,4 +1,11 @@
-module cpu (input clk,rst);
+module cpu (
+    input  clk,
+    input  rst,
+    output [15:0] dbg_alu_out,   
+    output [15:0] dbg_pc,       
+    output [5:0]  dbg_flags,     
+    output        dbg_wr         
+);
 
 wire [5:0] flag_in;
 wire [15:0] out1, out2, data_out;
@@ -46,5 +53,10 @@ MEM_state MEM (instructions,pc_out,clk,rst,A,sp_add_,data_out,pc2,flags,instruct
 ard2,ars12,ars22,ard3,out,return);
 
 WB_state WB (instructions2,clk,rst,ard3,addr,out,wr,update_r);
+
+assign dbg_alu_out = out;          // WB 阶段回写数据，或选 EX 阶段 ALU 结果
+assign dbg_pc      = pc[15:0];     // IF 阶段 PC
+assign dbg_flags   = flags;        // EX 阶段标志位
+assign dbg_wr      = wr;           // WB 写使能
 
 endmodule

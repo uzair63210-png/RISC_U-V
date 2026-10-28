@@ -50,7 +50,7 @@ output [5:0] ard_,output [4:0] ars1_,ars2_,output [15:0] rs1_,B_,A_,output [15:0
 input [3:0] con,output su,wr,input f0, output is_load_ex);
 wire [15:0] A1,B1;
 wire [5:0]f; 
-wire w1;
+wire wr1;
 
 ALU alu (rs1,rs2,con,instruction[10:9],A1,B1,f,flag,wr1,f0);
 

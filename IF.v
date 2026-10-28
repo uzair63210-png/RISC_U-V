@@ -4,6 +4,10 @@ output reg [31:0] pc, input stall);
 reg [31:0] instruction_memory[2097151:0];
 wire [31:0] next_pc;
 
+initial begin
+    $readmemh("program.hex", instruction_memory);
+end
+
 assign next_pc = brch ? PC_branch : (stall) ? pc : pc + 32'd1;
 
 always @(posedge clk or posedge rst) begin
